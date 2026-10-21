@@ -168,6 +168,14 @@ public struct UpdateChecker: Sendable {
         struct Asset: Decodable {
             let name: String
             let browserDownloadURL: URL
+
+            // Clés explicites : la stratégie de décodage par défaut ne convertit
+            // pas `browser_download_url`, et l'omettre faisait échouer tout le
+            // décodage de la release.
+            enum CodingKeys: String, CodingKey {
+                case name
+                case browserDownloadURL = "browser_download_url"
+            }
         }
 
         enum CodingKeys: String, CodingKey {

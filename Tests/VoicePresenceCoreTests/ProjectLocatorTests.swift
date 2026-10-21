@@ -50,7 +50,12 @@ final class ProjectLocatorTests: XCTestCase {
         try FileManager.default.createDirectory(
             at: bundle.appendingPathComponent("Media/inner.logicx", isDirectory: true),
             withIntermediateDirectories: true)
-        XCTAssertEqual(locator.projects(under: root), [bundle])
+
+        // Comparaison sur les chemins résolus : sous macOS, /var est un lien
+        // symbolique vers /private/var, et l'énumérateur renvoie la forme
+        // résolue là où la fixture a construit la forme d'origine.
+        XCTAssertEqual(locator.projects(under: root).map { $0.resolvingSymlinksInPath() },
+                       [bundle.resolvingSymlinksInPath()])
     }
 
     func testIgnoresOtherDirectories() throws {

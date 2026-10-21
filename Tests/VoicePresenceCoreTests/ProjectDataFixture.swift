@@ -184,9 +184,12 @@ extension AudioFileMeasurement {
 }
 
 /// Transport factice pour ``UpdateChecker``.
+///
+/// L'erreur est typée `UpdateError` et non `any Error` : le protocole est
+/// `Sendable`, ce qu'un existentiel d'`Error` n'est pas.
 struct StubReleaseFetcher: ReleaseFetching {
     var payload: Data?
-    var error: Error?
+    var error: UpdateError?
 
     func fetchLatestRelease() async throws -> Data {
         if let error { throw error }

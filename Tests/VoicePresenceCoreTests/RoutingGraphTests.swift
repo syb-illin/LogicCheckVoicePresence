@@ -81,8 +81,10 @@ final class RoutingGraphTests: XCTestCase {
     /// La fonction doit terminer.
     func testCycleTerminates() {
         let g = graph([(0x10, "Voice bus", 0x14), (0x14, "A", 0x18), (0x18, "B", 0x14)])
+        // Personne n'envoie vers 0x10 : aucun alimentant.
         XCTAssertEqual(g.feeders(of: [0x10]), [])
-        XCTAssertEqual(g.feeders(of: [0x14]), [0x18])
+        // 0x14 reçoit 0x10 (le bus lui-même) et 0x18, qui boucle avec lui.
+        XCTAssertEqual(g.feeders(of: [0x14]), [0x10, 0x18])
     }
 
     func testSelfLoopTerminates() {
