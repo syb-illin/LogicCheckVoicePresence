@@ -23,13 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
-
       - name: Versions
         run: |
           swift --version
           xcodebuild -version
+          sw_vers
 
       - name: Cache SwiftPM
         uses: actions/cache@v4
@@ -38,11 +36,19 @@ jobs:
           key: ${{ runner.os }}-spm-${{ hashFiles('Package.swift') }}
           restore-keys: ${{ runner.os }}-spm-
 
+      # La sortie est capturée pour être republiée en cas d'échec : les journaux
+      # d'exécution ne sont pas toujours accessibles, le diagnostic doit l'être.
       - name: Build
-        run: swift build --build-tests
+        id: build
+        run: |
+          set -o pipefail
+          swift build --build-tests 2>&1 | tee build.log
 
       - name: Test with coverage
-        run: swift test --enable-code-coverage
+        id: test
+        run: |
+          set -o pipefail
+          swift test --enable-code-coverage 2>&1 | tee test.log
 
       - name: Compute coverage
         id: coverage
@@ -58,15 +64,17 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload coverage artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: |
             coverage.lcov
             coverage-report.txt
+          if-no-files-found: ignore
 
       - name: Update coverage badge
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           python3 Scripts/update_coverage_badge.py "${{ steps.coverage.outputs.percent }}"
           if ! git diff --quiet README.md; then
@@ -77,14 +85,41 @@ jobs:
             git push
           fi
 
+      # Publie le diagnostic sur une branche dédiée quand quelque chose casse.
+      # Branche orpheline, un seul commit conservé : ce sont des journaux, pas
+      # de l'historique.
+      - name: Publish diagnostics on failure
+        if: failure()
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/diag
+          for f in build.log test.log coverage-report.txt; do
+            [ -f "$f" ] && cp "$f" /tmp/diag/ || true
+          done
+          {
+            echo "commit: ${GITHUB_SHA}"
+            echo "run:    ${GITHUB_RUN_ID}"
+            echo "date:   $(date -u +%FT%TZ)"
+            echo
+            echo "--- erreurs et avertissements ---"
+            grep -hE '(error|warning):' /tmp/diag/*.log 2>/dev/null | sort -u || echo "(aucune ligne error:/warning: capturée)"
+          } > /tmp/diag/summary.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-logs
+          git rm -rf --cached . > /dev/null 2>&1 || true
+          find . -maxdepth 1 -not -name .git -not -name . -exec rm -rf {} + 2>/dev/null || true
+          cp /tmp/diag/* .
+          git add -A
+          git commit -q -m "ci: diagnostic ${GITHUB_SHA::7} (run ${GITHUB_RUN_ID})"
+          git push -f origin ci-logs
+
   lint:
     name: Hygiène du source
     runs-on: macos-14
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
-      # Garde-fou sans dépendance externe : pas d'espaces en fin de ligne, pas de
-      # tabulation, et un retour à la ligne final dans chaque fichier.
       - name: Whitespace
         run: ./Scripts/check-whitespace.sh
