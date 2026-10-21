@@ -1,0 +1,25 @@
+# SwiftPM
+.build/
+.swiftpm/
+Package.resolved
+
+# Artefacts de build
+build/
+*.app
+*.zip
+*.sha256
+
+# Couverture
+coverage.lcov
+coverage-report.txt
+*.profdata
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+
+# macOS
+.DS_Store
+._*

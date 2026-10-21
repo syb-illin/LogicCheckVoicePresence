@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    name: Build & test
+    runs-on: macos-14
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+
+      - name: Versions
+        run: |
+          swift --version
+          xcodebuild -version
+
+      - name: Cache SwiftPM
+        uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.swift') }}
+          restore-keys: ${{ runner.os }}-spm-
+
+      - name: Build
+        run: swift build --build-tests
+
+      - name: Test with coverage
+        run: swift test --enable-code-coverage
+
+      - name: Compute coverage
+        id: coverage
+        run: |
+          PCT=$(./Scripts/coverage.sh)
+          echo "percent=$PCT" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Couverture du cœur analytique : ${PCT} %"
+            echo ''
+            echo '```'
+            cat coverage-report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            coverage.lcov
+            coverage-report.txt
+
+      - name: Update coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          python3 Scripts/update_coverage_badge.py "${{ steps.coverage.outputs.percent }}"
+          if ! git diff --quiet README.md; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "ci: couverture ${{ steps.coverage.outputs.percent }} %"
+            git push
+          fi
+
+  lint:
+    name: Hygiène du source
+    runs-on: macos-14
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # Garde-fou sans dépendance externe : pas d'espaces en fin de ligne, pas de
+      # tabulation, et un retour à la ligne final dans chaque fichier.
+      - name: Whitespace
+        run: ./Scripts/check-whitespace.sh
