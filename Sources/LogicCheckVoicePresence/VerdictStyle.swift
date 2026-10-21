@@ -49,6 +49,7 @@ enum VerdictStyle {
 }
 
 /// Pastille d'un verdict, réutilisée dans la table et dans le détail.
+@MainActor
 struct VerdictBadge: View {
     let verdict: Verdict
     var compact = false

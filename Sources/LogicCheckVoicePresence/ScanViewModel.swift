@@ -64,9 +64,13 @@ public final class ScanViewModel {
     // MARK: - Dérivés
 
     public var filteredInspections: [ProjectInspection] {
-        inspections.lazy
-            .filter { verdictFilter == nil || $0.verdict == verdictFilter }
-            .filter { nameFilter.isEmpty || $0.name.localizedCaseInsensitiveContains(nameFilter) }
+        // Critères copiés dans des locales : la fermeture n'a pas à capturer
+        // `self`, et les propriétés ne sont pas relues à chaque élément.
+        let verdict = verdictFilter
+        let needle = nameFilter
+        return inspections.lazy
+            .filter { verdict == nil || $0.verdict == verdict }
+            .filter { needle.isEmpty || $0.name.localizedCaseInsensitiveContains(needle) }
             .sorted {
                 ($0.verdict.sortRank, $0.name.localizedLowercase)
                     < ($1.verdict.sortRank, $1.name.localizedLowercase)

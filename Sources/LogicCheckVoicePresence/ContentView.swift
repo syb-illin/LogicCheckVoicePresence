@@ -3,6 +3,7 @@ import AppKit
 import UniformTypeIdentifiers
 import VoicePresenceCore
 
+@MainActor
 struct ContentView: View {
     @State private var model = ScanViewModel()
     @State private var selection: ProjectInspection.ID?

@@ -9,6 +9,7 @@ import VoicePresenceCore
 /// canaux retenus, lesquels sont des bus intermédiaires, combien de régions sont
 /// rattachées, et les libellés bruts du classifieur. Rien n'est présenté comme
 /// une boîte noire.
+@MainActor
 struct ProjectDetailView: View {
     let inspection: ProjectInspection
     let analyzeAudio: () -> Void

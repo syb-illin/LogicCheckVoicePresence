@@ -3,6 +3,7 @@ import AppKit
 import VoicePresenceCore
 
 /// Fenêtre « À propos » : version, auteur, et vérification de mise à jour.
+@MainActor
 struct AboutView: View {
     let model: ScanViewModel
     @Environment(\.dismiss) private var dismiss

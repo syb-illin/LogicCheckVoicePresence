@@ -2,6 +2,7 @@ import SwiftUI
 import VoicePresenceCore
 
 @main
+@MainActor
 struct LogicCheckVoicePresenceApp: App {
     var body: some Scene {
         WindowGroup {
