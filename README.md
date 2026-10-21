@@ -8,7 +8,7 @@ Scanne un dossier de projets Logic Pro et répond projet par projet, en lisant l
 routage du mixeur directement dans le binaire du projet.
 
 [![CI](https://github.com/syb-illin/LogicCheckVoicePresence/actions/workflows/ci.yml/badge.svg)](https://github.com/syb-illin/LogicCheckVoicePresence/actions/workflows/ci.yml)
-[![Couverture](https://img.shields.io/badge/couverture-0.0%25-red?style=flat-square)](https://github.com/syb-illin/LogicCheckVoicePresence/actions/workflows/ci.yml)
+[![Couverture](https://img.shields.io/badge/couverture-82.9%25-green?style=flat-square)](https://github.com/syb-illin/LogicCheckVoicePresence/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/syb-illin/LogicCheckVoicePresence?style=flat-square&color=blue)](https://github.com/syb-illin/LogicCheckVoicePresence/releases/latest)
 [![Téléchargements](https://img.shields.io/github/downloads/syb-illin/LogicCheckVoicePresence/total?style=flat-square)](https://github.com/syb-illin/LogicCheckVoicePresence/releases)
 
