@@ -110,8 +110,8 @@ final class ReportExporterTests: XCTestCase {
         let summary = ReportExporter.summary([inspection("a", .busWithAudio),
                                               inspection("b", .busWithAudio),
                                               inspection("c", .undecidable)])
-        XCTAssertEqual(summary.map(\.0), [.undecidable, .busWithAudio])
-        XCTAssertEqual(summary.map(\.1), [1, 2])
+        XCTAssertEqual(summary.map(\.verdict), [.undecidable, .busWithAudio])
+        XCTAssertEqual(summary.map(\.count), [1, 2])
     }
 
     func testSummaryOfEmptyInput() {
@@ -121,7 +121,11 @@ final class ReportExporterTests: XCTestCase {
     func testSummaryUsesEffectiveVerdict() {
         var item = inspection("a", .undecidable, audioFiles: 1)
         item.audioAnalysis = AudioAnalysisReport(files: [.stub(isSilent: true)])
-        XCTAssertEqual(ReportExporter.summary([item]).map(\.0), [.busNoAudio])
+        XCTAssertEqual(ReportExporter.summary([item]).map(\.verdict), [.busNoAudio])
+    }
+
+    func testVerdictCountIsIdentifiedByItsVerdict() {
+        XCTAssertEqual(VerdictCount(verdict: .busOrphan, count: 3).id, .busOrphan)
     }
 }
 

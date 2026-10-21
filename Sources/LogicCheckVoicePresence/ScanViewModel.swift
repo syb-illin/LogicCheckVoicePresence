@@ -73,9 +73,7 @@ public final class ScanViewModel {
             }
     }
 
-    public var verdictCounts: [(verdict: Verdict, count: Int)] {
-        ReportExporter.summary(inspections).map { (verdict: $0.0, count: $0.1) }
-    }
+    public var verdictCounts: [VerdictCount] { ReportExporter.summary(inspections) }
 
     public var pendingAudioAnalysisCount: Int {
         inspections.filter(\.needsAudioAnalysis).count

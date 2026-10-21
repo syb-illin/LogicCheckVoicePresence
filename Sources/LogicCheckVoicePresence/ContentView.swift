@@ -51,7 +51,7 @@ struct ContentView: View {
             if !model.inspections.isEmpty {
                 Section("Verdicts") {
                     verdictRow(nil, label: "Tout", count: model.inspections.count)
-                    ForEach(model.verdictCounts, id: \.verdict) { entry in
+                    ForEach(model.verdictCounts) { entry in
                         verdictRow(entry.verdict,
                                    label: VerdictStyle.shortLabel(entry.verdict),
                                    count: entry.count)

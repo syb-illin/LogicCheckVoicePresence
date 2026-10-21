@@ -69,8 +69,11 @@ struct AboutView: View {
     @ViewBuilder
     private var updateSection: some View {
         VStack(spacing: 8) {
+            // Motifs suffixés par `?` : on filtre sur un `UpdateStatus?`, et
+            // Swift n'autorise pas de matcher les cas du type enveloppé sans
+            // l'indiquer.
             switch model.updateStatus {
-            case .none:
+            case nil:
                 Button {
                     check()
                 } label: {
@@ -85,12 +88,12 @@ struct AboutView: View {
                 }
                 .disabled(isChecking)
 
-            case .upToDate(let current):
+            case .upToDate(let current)?:
                 Label("À jour (\(current.description))", systemImage: "checkmark.circle")
                     .font(.callout).foregroundStyle(.green)
                 Button("Vérifier à nouveau") { check() }.controlSize(.small)
 
-            case .updateAvailable(let release):
+            case .updateAvailable(let release)?:
                 VStack(spacing: 6) {
                     Label("Version \(release.version.description) disponible",
                           systemImage: "arrow.down.circle.fill")
@@ -116,7 +119,7 @@ struct AboutView: View {
                     }
                 }
 
-            case .failed(let message):
+            case .failed(let message)?:
                 // Un échec est dit comme tel : afficher « à jour » quand la
                 // vérification n'a pas abouti serait un mensonge commode.
                 VStack(spacing: 4) {

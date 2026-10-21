@@ -5,7 +5,7 @@ import Foundation
 /// Type valeur immuable à une exception près : ``audioAnalysis``, renseignée
 /// après coup quand l'étage 3 tourne. Le reste ne change jamais après
 /// construction, ce qui rend le partage entre tâches sûr sans verrou.
-public struct ProjectInspection: Identifiable, Sendable {
+public struct ProjectInspection: Identifiable, Sendable, Equatable {
     public let id: UUID
     public let name: String
     public let url: URL

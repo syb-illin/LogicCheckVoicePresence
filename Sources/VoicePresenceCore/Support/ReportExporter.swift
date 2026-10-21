@@ -53,9 +53,25 @@ public enum ReportExporter {
     }
 
     /// Résumé par verdict, pour l'affichage et les journaux.
-    public static func summary(_ inspections: [ProjectInspection]) -> [(Verdict, Int)] {
+    ///
+    /// Renvoie un type nommé et non un tuple : SwiftUI a besoin d'un
+    /// `Identifiable` pour itérer, et Swift ne permet pas de key path vers un
+    /// élément de tuple.
+    public static func summary(_ inspections: [ProjectInspection]) -> [VerdictCount] {
         Dictionary(grouping: inspections, by: \.verdict)
-            .map { ($0.key, $0.value.count) }
-            .sorted { $0.0.sortRank < $1.0.sortRank }
+            .map { VerdictCount(verdict: $0.key, count: $0.value.count) }
+            .sorted { $0.verdict.sortRank < $1.verdict.sortRank }
+    }
+}
+
+/// Nombre de projets pour un verdict donné.
+public struct VerdictCount: Identifiable, Hashable, Sendable {
+    public var id: Verdict { verdict }
+    public let verdict: Verdict
+    public let count: Int
+
+    public init(verdict: Verdict, count: Int) {
+        self.verdict = verdict
+        self.count = count
     }
 }
