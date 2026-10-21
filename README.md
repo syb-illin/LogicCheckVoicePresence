@@ -13,7 +13,7 @@ routage du mixeur directement dans le binaire du projet.
 [![Téléchargements](https://img.shields.io/github/downloads/syb-illin/LogicCheckVoicePresence/total?style=flat-square)](https://github.com/syb-illin/LogicCheckVoicePresence/releases)
 
 [![macOS](https://img.shields.io/badge/macOS-14%2B-000000?style=flat-square&logo=apple)](https://www.apple.com/macos/)
-[![Swift](https://img.shields.io/badge/Swift-5.9-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-6.0-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
 [![SwiftUI](https://img.shields.io/badge/SwiftUI-native-0071e3?style=flat-square)](https://developer.apple.com/xcode/swiftui/)
 [![Licence](https://img.shields.io/badge/licence-MIT-green?style=flat-square)](LICENSE)
 

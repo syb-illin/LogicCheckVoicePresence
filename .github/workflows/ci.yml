@@ -17,7 +17,7 @@ permissions:
 jobs:
   test:
     name: Build & test
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 25
 
     steps:
@@ -42,7 +42,10 @@ jobs:
         id: build
         run: |
           set -o pipefail
-          swift build --build-tests 2>&1 | tee build.log
+          # La version de toolchain est jointe au journal : un diagnostic doit
+          # dire avec quoi il a été produit.
+          swift --version > build.log 2>&1
+          swift build --build-tests 2>&1 | tee -a build.log
 
       - name: Test with coverage
         id: test
@@ -117,7 +120,7 @@ jobs:
 
   lint:
     name: Hygiène du source
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
