@@ -16,8 +16,14 @@ DISPLAY_NAME="Logic Check Voice Presence"
 BUNDLE_ID="io.github.sybillin.LogicCheckVoicePresence"
 MIN_MACOS="14.0"
 
-VERSION="${VERSION:-$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo 0.0.0)}"
+# Majeur et mineur viennent du fichier VERSION, le patch du nombre de commits :
+# même règle qu'en CI, pour qu'un build local porte la version qu'il aurait eue
+# une fois publié.
 BUILD="${BUILD:-$(git rev-list --count HEAD 2>/dev/null || echo 1)}"
+if [ -z "${VERSION:-}" ]; then
+    BASE=$(tr -d '[:space:]' < ./VERSION 2>/dev/null || echo 0.0)
+    VERSION="${BASE}.${BUILD}"
+fi
 
 echo "▸ Compilation de $APP_NAME $VERSION (build $BUILD)"
 swift build -c release --product "$APP_NAME"

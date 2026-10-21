@@ -84,7 +84,9 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add README.md
-            git commit -m "ci: couverture ${{ steps.coverage.outputs.percent }} %"
+            # [skip ci] est indispensable : sans lui ce commit relancerait la CI,
+            # qui publierait une release, qui réécrirait le badge, sans fin.
+            git commit -m "ci: couverture ${{ steps.coverage.outputs.percent }} % [skip ci]"
             git push
           fi
 
