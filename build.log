@@ -1,0 +1,71 @@
+swift-driver version: 1.120.5 Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+Target: arm64-apple-macosx15.0
+Building for debugging...
+[0/12] /Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/.build/arm64-apple-macosx/debug/LogicCheckVoicePresencePackageTests.derived/runner.swift
+[1/12] Write sources
+[5/12] Write LogicCheckVoicePresence-entitlement.plist
+[6/12] Write swift-version--79AA4F9932D1E87A.txt
+[8/25] Emitting module VoicePresenceCore
+[9/30] Compiling VoicePresenceCore ProjectInspection.swift
+[10/30] Compiling VoicePresenceCore ProjectLocator.swift
+[11/30] Compiling VoicePresenceCore ScanCoordinator.swift
+[12/30] Compiling VoicePresenceCore ByteReader.swift
+[13/30] Compiling VoicePresenceCore LogicFormat.swift
+[14/30] Compiling VoicePresenceCore ProjectDataParser.swift
+[15/30] Compiling VoicePresenceCore AppInfo.swift
+[16/30] Compiling VoicePresenceCore Log.swift
+[17/30] Compiling VoicePresenceCore ReportExporter.swift
+[18/30] Compiling VoicePresenceCore SemanticVersion.swift
+[19/30] Compiling VoicePresenceCore UpdateChecker.swift
+[20/30] Compiling VoicePresenceCore RegionAttribution.swift
+[21/30] Compiling VoicePresenceCore RoutingGraph.swift
+[22/30] Compiling VoicePresenceCore Verdict.swift
+[23/30] Compiling VoicePresenceCore VoiceBusAnalysis.swift
+[24/30] Compiling VoicePresenceCore AudioAnalysis.swift
+[25/30] Compiling VoicePresenceCore SystemAudioAnalyzer.swift
+[26/45] Compiling VoicePresenceCoreTests ByteReaderTests.swift
+[27/45] Compiling VoicePresenceCoreTests ProjectDataFixture.swift
+[28/45] Emitting module LogicCheckVoicePresence
+[29/45] Compiling VoicePresenceCoreTests ProjectDataParserTests.swift
+[30/45] Compiling VoicePresenceCoreTests ProjectInspectorTests.swift
+[31/47] Compiling LogicCheckVoicePresence ScanViewModel.swift
+[32/47] Compiling LogicCheckVoicePresence VerdictStyle.swift
+[32/47] Write Objects.LinkFileList
+[33/47] Linking LogicCheckVoicePresence
+[34/47] Applying LogicCheckVoicePresence
+[37/47] Compiling VoicePresenceCoreTests ReportExporterTests.swift
+[38/47] Compiling VoicePresenceCoreTests RoutingGraphTests.swift
+[39/47] Compiling VoicePresenceCoreTests ScanCoordinatorTests.swift
+[40/51] Emitting module VoicePresenceCoreTests
+[46/51] Compiling VoicePresenceCoreTests SemanticVersionTests.swift
+/Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/Tests/VoicePresenceCoreTests/UpdateCheckerTests.swift:12:76: error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 10 |                          current: String = "1.0.0",
+ 11 |                          includePrereleases: Bool = false) -> UpdateChecker {
+ 12 |         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
+    |                                                                            `- error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 13 |                       currentVersion: SemanticVersion(current),
+ 14 |                       includePrereleases: includePrereleases)
+[47/51] Compiling VoicePresenceCoreTests UpdateCheckerTests.swift
+/Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/Tests/VoicePresenceCoreTests/UpdateCheckerTests.swift:12:76: error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 10 |                          current: String = "1.0.0",
+ 11 |                          includePrereleases: Bool = false) -> UpdateChecker {
+ 12 |         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
+    |                                                                            `- error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 13 |                       currentVersion: SemanticVersion(current),
+ 14 |                       includePrereleases: includePrereleases)
+[48/51] Compiling VoicePresenceCoreTests VerdictPolicyTests.swift
+/Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/Tests/VoicePresenceCoreTests/UpdateCheckerTests.swift:12:76: error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 10 |                          current: String = "1.0.0",
+ 11 |                          includePrereleases: Bool = false) -> UpdateChecker {
+ 12 |         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
+    |                                                                            `- error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 13 |                       currentVersion: SemanticVersion(current),
+ 14 |                       includePrereleases: includePrereleases)
+[49/51] Compiling VoicePresenceCoreTests VoiceBusAnalyzerTests.swift
+/Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/Tests/VoicePresenceCoreTests/UpdateCheckerTests.swift:12:76: error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 10 |                          current: String = "1.0.0",
+ 11 |                          includePrereleases: Bool = false) -> UpdateChecker {
+ 12 |         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
+    |                                                                            `- error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 13 |                       currentVersion: SemanticVersion(current),
+ 14 |                       includePrereleases: includePrereleases)

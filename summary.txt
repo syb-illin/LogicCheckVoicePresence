@@ -1,0 +1,8 @@
+commit: bddc48a85477f32953499c039e734fbc1cb34612
+run:    39587225869
+date:   2026-10-21T10:48:43Z
+
+--- erreurs et avertissements ---
+    |                                                                            `- error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
+ 12 |         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
+/Users/runner/work/LogicCheckVoicePresence/LogicCheckVoicePresence/Tests/VoicePresenceCoreTests/UpdateCheckerTests.swift:12:76: error: cannot convert value of type '(any Error)?' to expected argument type 'UpdateError?'
