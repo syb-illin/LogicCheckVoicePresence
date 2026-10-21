@@ -6,7 +6,7 @@ import XCTest
 final class UpdateCheckerTests: XCTestCase {
 
     private func checker(payload: Data? = nil,
-                         error: Error? = nil,
+                         error: UpdateError? = nil,
                          current: String = "1.0.0",
                          includePrereleases: Bool = false) -> UpdateChecker {
         UpdateChecker(fetcher: StubReleaseFetcher(payload: payload, error: error),
